@@ -27,7 +27,6 @@ const questions = [
     {
         type: "input",
         message: "What command should be run to start tests?",
-        default: "`npm test`",
         name: "Test",
     },
     {
@@ -38,7 +37,6 @@ const questions = [
     {
         type: "input",
         message: "What is the license for your project",
-        default: "MIT",
         name: "License",
     }
 ];
@@ -48,7 +46,6 @@ function init() {
     inquirer.prompt(questions).then(responses => {
         console.log(responses);
     axios.get ("https://api.github.com/users/" + responses.User).then(response => {
-        console(response);
         fs.writeToFile('README.md', markDown(responses), (err) => {
             if (err) {
                 throw err;
