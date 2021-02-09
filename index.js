@@ -1,0 +1,1 @@
+markDown = require('generateMarkdown.js');
