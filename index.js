@@ -1,53 +1,65 @@
 const fs = require('fs');
 const axios = require('axios');
 const inquirer = require('inquirer');
-const markDown = require('generateMarkdown.js');
+const markDown = require('./generateMarkdown.js');
 
 const questions = [
     {
         type: "input",
         message: "Please enter your Github username.",
-        name: "userName"
+        name: "User"
     },
     {
         type: "input",
         message: "Please enter your email address.",
-        name: "userEmail",
+        name: "Email",
     },
     {
         type: "input",
         message: "Please enter your project title.",
-        name: "projectTitle",
+        name: "Title",
     },
     {
         type: "input",
         message: "Please enter a description for this project.",
-        name: "projectDescription",
+        name: "Description",
     },
     {
         type: "input",
         message: "What command should be run to start tests?",
         default: "`npm test`",
-        name: "projectTest",
+        name: "Test",
     },
     {
         type: "input",
-        message: "Any additional information about the project?",
-        name: "projectInfo",
+        message: "Is there other information about this project you would like to add?",
+        name: "Information",
     },
     {
         type: "input",
-        message: "Please input an appropriate license type for this project",
+        message: "What is the license for your project",
         default: "MIT",
-        name: "projectLicense",
+        name: "License",
     }
 ];
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+
 
 // TODO: Create a function to initialize app
-function init() {}
+function init() {
+    inquirer.prompt(questions).then(responses => {
+        console.log(responses);
+    axios.get ("https://api.github.com/users/" + responses.User).then(response => {
+        console(response);
+        fs.writeToFile('README.md', markDown(responses), (err) => {
+            if (err) {
+                throw err;
+            };
+        });
+    })
+    })
+}
 
 // Function call to initialize app
 init();
